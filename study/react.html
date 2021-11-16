@@ -11,15 +11,34 @@
 
     <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-    <script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
       const root = document.getElementById("root");
-      console.log("React", React);
-      console.log("ReactDOM", ReactDOM);
+      // console.log("React", React);
+      // console.log("ReactDOM", ReactDOM);
 
-      const span = React.createElement("span", { id: "number", style: { color: "red", border: "3px solid blue" } }, "Hello World");
-      console.log("span", span);
+      // JSX를 사용하지 않은 문법
+      // const span = React.createElement("span", { onMouseEnter: () => console.log("onMouseEnter") }, "Hello World");
+      // const button = React.createElement("button", { style: { backgroundColor: "tomato" }, onClick: () => console.log("onClick") }, "Click");
+      // const container = React.createElement("div", null, [span, button]);
 
-      ReactDOM.render(span, root);
+      // JSX 문법
+      // JSX 문법을 사용할 때는 babel이 필요하다.
+      // const span = <span onMouseEnter={() => console.log("onMouseEnter")}>Hello</span>;
+      // const button = <button onClick={() => console.log("onClick")}>Click</button>;
+
+      const Span = () => <span onMouseEnter={() => console.log("onMouseEnter")}>Hello</span>;
+      const Button = () => <button onClick={() => console.log("onClick")}>Click</button>;
+      const Container = () => (
+        <div>
+          <Span />
+          <Button />
+        </div>
+      );
+
+      console.log("Container", typeof Container);
+
+      ReactDOM.render(<Container />, root);
     </script>
   </body>
 </html>
