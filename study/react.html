@@ -8,27 +8,38 @@
   </head>
   <body>
     <div id="root"></div>
-
-    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
       const root = document.getElementById("root");
 
       const App = () => {
-        const [counter, setCounter] = React.useState(0);
-        const onClick = () => {
-          setCounter(counter + 1);
-          console.log("counter", counter);
+        const [time, setTime] = React.useState("");
+        const [isSwitch, setIsSwitch] = React.useState(false);
+
+        const handleOnChange = (event) => {
+          setTime(event.target.value);
         };
 
-        console.log("rendered");
+        const handleSwitch = () => {
+          setTime(0);
+          setIsSwitch((isSwitch) => !isSwitch);
+        };
+
+        const handleReset = () => {
+          setTime(0);
+        };
 
         return (
           <div>
-            <span>Total Clicks: {counter}</span>
-            <button onClick={onClick}>Up</button>
-            <button>Down</button>
+            <h1 className="title">Convert Minutes to Hours</h1>
+            <label htmlFor="minutes">Minutes</label>
+            <input value={isSwitch ? time * 60 : time} id="minutes" type="number" placeholder="Minutes" onChange={handleOnChange} disabled={isSwitch} />
+            <label htmlFor="hours">Hours</label>
+            <input value={isSwitch ? time : time / 60} id="hours" type="number" placeholder="Hours" onChange={handleOnChange} disabled={!isSwitch} />
+            <button onClick={handleSwitch}>Switch</button>
+            <button onClick={handleReset}>Reset</button>
           </div>
         );
       };
