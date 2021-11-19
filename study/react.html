@@ -14,7 +14,7 @@
     <script type="text/babel">
       const root = document.getElementById("root");
 
-      const App = () => {
+      const MinutesToHours = () => {
         const [time, setTime] = React.useState("");
         const [isSwitch, setIsSwitch] = React.useState(false);
 
@@ -33,13 +33,63 @@
 
         return (
           <div>
-            <h1 className="title">Convert Minutes to Hours</h1>
+            <h1>Convert Minutes to Hours</h1>
             <label htmlFor="minutes">Minutes</label>
             <input value={isSwitch ? time * 60 : time} id="minutes" type="number" placeholder="Minutes" onChange={handleOnChange} disabled={isSwitch} />
             <label htmlFor="hours">Hours</label>
             <input value={isSwitch ? time : time / 60} id="hours" type="number" placeholder="Hours" onChange={handleOnChange} disabled={!isSwitch} />
             <button onClick={handleSwitch}>Switch</button>
             <button onClick={handleReset}>Reset</button>
+          </div>
+        );
+      };
+
+      const KilometersToMeters = () => {
+        const [unit, setUnit] = React.useState(0);
+        const [isSwitch, setIsSwitch] = React.useState(false);
+
+        const handleOnChange = (event) => {
+          setUnit(event.target.value);
+        };
+
+        const handleSwitch = () => {
+          setIsSwitch((isSwitch) => !isSwitch);
+          setUnit(0);
+        };
+
+        const handleReset = () => {
+          setUnit(0);
+        };
+
+        return (
+          <div>
+            <h1>Convert Kilometers to Meters</h1>
+            <h2>Kilometers</h2>
+            <input type="text" placeholder="Kilometers" value={isSwitch ? unit / 1000 : unit} onChange={handleOnChange} disabled={isSwitch} />
+            <h2>Meters</h2>
+            <input type="text" placeholder="Meters" value={isSwitch ? unit : unit * 1000} onChange={handleOnChange} disabled={!isSwitch} />
+            <br />
+            <button onClick={handleSwitch}>Switch</button>
+            <button onClick={handleReset}>Reset</button>
+          </div>
+        );
+      };
+
+      const App = () => {
+        const [index, setIndex] = React.useState("time");
+
+        const handleSelect = (event) => {
+          setIndex(event.target.value);
+        };
+
+        return (
+          <div>
+            <h1>App</h1>
+            <select value={index} onChange={handleSelect}>
+              <option value="time">Minutes to Hours</option>
+              <option value="unit">Kilometers to Meters</option>
+            </select>
+            {index === "time" ? <MinutesToHours /> : <KilometersToMeters />}
           </div>
         );
       };
