@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Props</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.7.2/prop-types.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const root = document.getElementById("root");
+
+      const Button = ({ text, handleChangeValue }) => {
+        return (
+          <button onClick={handleChangeValue} style={{ backgroundColor: "dodgerblue", color: "white", border: "none", padding: "10px 20px", cursor: "pointer", margin: "10px" }}>
+            {text}
+          </button>
+        );
+      };
+
+      // PropTypes
+      Button.propTypes = {
+        text: PropTypes.string.isRequired,
+        handleChangeValue: PropTypes.func,
+      };
+
+      // React.memo()
+      const MemoButton = React.memo(Button);
+
+      const App = () => {
+        const [value, setValue] = React.useState("Save");
+
+        const handleChangeValue = () => {
+          setValue("Revert");
+        };
+
+        return (
+          <div>
+            <h1>App</h1>
+            <MemoButton text={value} handleChangeValue={handleChangeValue} />
+            <MemoButton text="Confirm" />
+          </div>
+        );
+      };
+
+      ReactDOM.render(<App />, root);
+    </script>
+  </body>
+</html>
