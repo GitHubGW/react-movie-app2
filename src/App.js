@@ -1,73 +1,34 @@
-import { useEffect, useState } from "react";
-import styles from "./App.module.css";
-
-const Hello = () => {
-  useEffect(() => {
-    console.log("Start useEffect");
-    return () => console.log("Finish useEffect");
-  }, []);
-
-  return <h1>Hello</h1>;
-};
+import { useState } from "react";
 
 const App = () => {
-  const [counter, setConter] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const [showing, setShowing] = useState(false);
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
 
-  const handleClick = () => {
-    setConter((counter) => counter + 1);
-  };
-
-  const handleInputChange = (event) => {
-    setKeyword(event.target.value);
-  };
-
-  const handleFormClick = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    setToDos((toDos) => [...toDos, toDo]);
+    setToDo("");
   };
 
-  const handleShowing = () => {
-    setShowing((showing) => !showing);
+  const handleChange = (event) => {
+    setToDo(event.target.value);
   };
-
-  useEffect(() => {
-    console.log("only one");
-  }, []);
-
-  useEffect(() => {
-    console.log("counter changed");
-  }, [counter]);
-
-  useEffect(() => {
-    console.log("keyword changed");
-  }, [keyword]);
-
-  useEffect(() => {
-    console.log("counter+keyword changed");
-  }, [counter, keyword]);
 
   return (
     <div>
-      <div>
-        <h1 className={styles.title}>Counter</h1>
-        <h3>{counter}</h3>
-        <button onClick={handleClick}>Add</button>
-      </div>
-
-      <form>
-        <h1>Keyword</h1>
-        <input type="text" placeholder="Search keyword" value={keyword} onChange={handleInputChange} />
-        <button type="submit" onClick={handleFormClick}>
-          검색
-        </button>
+      <h1>To Do ({toDos.length})</h1>
+      <form onSubmit={handleSubmit}>
+        <input value={toDo} onChange={handleChange} type="text" placeholder="Write to do" />
+        <button type="submit">Add</button>
       </form>
-
-      <div>
-        <h1>Showing</h1>
-        <button onClick={handleShowing}>{showing ? "Hide" : "Show"}</button>
-        {showing && <Hello />}
-      </div>
+      <ul>
+        {toDos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
     </div>
   );
 };
