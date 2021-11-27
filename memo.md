@@ -105,3 +105,28 @@ const App = () => {
 
 export default App;
 ```
+
+### react-router-dom v5->v6 변경사항
+
+- Switch컴포넌트가 Routes컴포넌트로 대체되었다.
+- Route컴포넌트 사이에 자식 컴포넌트를 넣지 않고, element prop에 자식 컴포넌트를 할당한다.
+- HashRouter를 사용했을 때, 경로가 겹치는 문제가 발생해서 BrowserRouter로 변경하였다.
+
+```js
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Detail from "./routes/Detail";
+import Home from "./routes/Home";
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<Detail />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default App;
+```
