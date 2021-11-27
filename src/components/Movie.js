@@ -9,8 +9,8 @@ const Movie = ({ movie }) => {
         {movie.title} ({movie.year})
       </h3>
       <ul>
-        {movie.genres.map((genre) => (
-          <li>{genre}</li>
+        {movie.genres?.map((genre) => (
+          <li key={genre}>{genre}</li>
         ))}
       </ul>
     </Link>
@@ -19,6 +19,7 @@ const Movie = ({ movie }) => {
 
 Movie.propTypes = {
   movie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     medium_cover_image: PropTypes.string,
     title: PropTypes.string.isRequired,
     genres: PropTypes.arrayOf(PropTypes.string),

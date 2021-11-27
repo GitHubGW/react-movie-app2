@@ -111,6 +111,7 @@ export default App;
 - Switch컴포넌트가 Routes컴포넌트로 대체되었다.
 - Route컴포넌트 사이에 자식 컴포넌트를 넣지 않고, element prop에 자식 컴포넌트를 할당한다.
 - HashRouter를 사용했을 때, 경로가 겹치는 문제가 발생해서 BrowserRouter로 변경하였다.
+- react-router-dom v6: https://reactrouter.com/docs/en/v6/getting-started/overview
 
 ```js
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -129,4 +130,39 @@ const App = () => {
 };
 
 export default App;
+```
+
+### useCallback
+
+```js
+// useCallback 사용
+const handleFetch = useCallback(async () => {
+  console.log("handleFetch");
+
+  const {
+    data: { movie },
+  } = await (await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)).json();
+  setMovie(movie);
+  setLoading(false);
+}, [id]);
+
+useEffect(() => {
+  handleFetch();
+}, [handleFetch]);
+```
+
+```js
+// useCallback 사용 X
+useEffect(() => {
+  const handleFetch = async () => {
+    console.log("handleFetch");
+
+    const {
+      data: { movie },
+    } = await (await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)).json();
+    setMovie(movie);
+    setLoading(false);
+  };
+  handleFetch();
+}, [id]);
 ```
