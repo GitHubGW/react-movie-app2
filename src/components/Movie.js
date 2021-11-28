@@ -4,7 +4,7 @@ import styles from "./Movie.module.css";
 
 const Movie = ({ movie }) => {
   return (
-    <Link to={`/movie/${movie.id}`} className={styles.container}>
+    <Link to={`movie/${movie.id}`} className={styles.container}>
       <img src={movie?.medium_cover_image} alt={movie.title} />
       <h3>
         {movie.title} ({movie.year})
